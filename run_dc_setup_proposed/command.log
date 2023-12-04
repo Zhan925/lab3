@@ -1,6 +1,6 @@
 #@ # 
 #@ # Running dc_shell Version K-2015.06-SP2 for linux64 -- Aug 31, 2015
-#@ # Date:   Mon Dec  4 13:32:45 2023
+#@ # Date:   Mon Dec  4 14:13:45 2023
 #@ # Run by: ee260afa@ieng6-ece-18.ucsd.edu
 #@ 
 
@@ -3924,7 +3924,6 @@ source -echo -verbose /home/linux/ieng6/ee260afa23/ee260afa23fl/lab3/run_dc_setu
 #@ 
 #@ # -- End source /home/linux/ieng6/ee260afa23/ee260afa23fl/lab3/run_dc_setup_proposed/run_dc.tcl
 
-reprot_power > power_new.rpt
+report_timing > timing_new.rpt
 report_power > power_new.rpt
 report_qor > qor_new.rpt
-report_timing > timing_new.rpt

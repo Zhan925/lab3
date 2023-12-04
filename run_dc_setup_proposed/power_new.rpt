@@ -4,7 +4,7 @@ Report : power
         -analysis_effort low
 Design : fir4rca
 Version: K-2015.06-SP2
-Date   : Mon Dec  4 13:33:41 2023
+Date   : Mon Dec  4 14:15:01 2023
 ****************************************
 
 
@@ -30,12 +30,12 @@ Power-specific unit information :
     Leakage Power Units = 1nW
 
 
-  Cell Internal Power  =   1.4516 mW   (84%)
-  Net Switching Power  = 278.4930 uW   (16%)
+  Cell Internal Power  =   1.2204 mW   (93%)
+  Net Switching Power  =  98.2715 uW    (7%)
                          ---------
-Total Dynamic Power    =   1.7301 mW  (100%)
+Total Dynamic Power    =   1.3187 mW  (100%)
 
-Cell Leakage Power     =  20.0812 uW
+Cell Leakage Power     =  11.6021 uW
 
 
                  Internal         Switching           Leakage            Total
@@ -45,9 +45,9 @@ io_pad             0.0000            0.0000            0.0000            0.0000 
 memory             0.0000            0.0000            0.0000            0.0000  (   0.00%)
 black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
 clock_network      0.0000            0.0000            0.0000            0.0000  (   0.00%)
-register           1.2606            0.1596        7.5339e+03            1.4277  (  81.58%)
+register           1.1067        7.5385e-02        4.7400e+03            1.1868  (  89.21%)
 sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
-combinational      0.1910            0.1189        1.2547e+04            0.3224  (  18.42%)
+combinational      0.1138        2.2886e-02        6.8618e+03            0.1435  (  10.79%)
 --------------------------------------------------------------------------------------------------
-Total              1.4516 mW         0.2785 mW     2.0081e+04 nW         1.7502 mW
+Total              1.2204 mW     9.8272e-02 mW     1.1602e+04 nW         1.3303 mW
 1

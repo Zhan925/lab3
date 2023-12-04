@@ -16,6 +16,9 @@ module fir4rca #(parameter w=16)(
   logic         [w  :0] csa5_s;   // from w+1-bit bottom CSA
   logic         [w+1:0] csa5_c;
   logic         [w+1:0] sum;	  // from final ripple adder
+  
+  look_ahead_adder #(.w(w+3)) adder (.a(csa5_c), .b({0,csa5_s}), .cin(0), .sum(sum), .cout());
+  
   always_comb begin
     csa4_c[0] = 0;                // carry runs from [w:1], not [w-1:0]
     csa5_c[0] = 0; 
@@ -25,7 +28,7 @@ module fir4rca #(parameter w=16)(
       {csa5_c[i+1],csa5_s[i]} = csa4_c[i]+csa4_s[i]+dr[i];
     csa5_s[w] = csa4_c[w];	      // don't even top FA
     csa5_c[w+1] = 0;
-    sum = csa5_c + csa5_s;        // final CPA or ripple adder (behavioral statement here)      
+    //sum = csa5_c + csa5_s;        // final CPA or ripple adder (behavioral statement here)      
   end
 //  wire         signed [16:0] sum1 = ar + br;
 //  wire         signed [16:0] sum2 = cr + dr;
