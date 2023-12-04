@@ -1,5 +1,5 @@
-set top_module fir4rca 
-set rtlPath "/home/linux/ieng6/ee260afa23/public/lab3_setup/run_dc_setup_reference/rtl/"
+set top_module fir4rca
+set rtlPath "/home/linux/ieng6/ee260afa23/ee260afa23fl/lab3/run_dc_setup_proposed/rtl/"
 
 # Target library
 set target_library /home/linux/ieng6/ee260afa23/public/lab3_setup/libraries/db/tcbn65gpluswc.db 

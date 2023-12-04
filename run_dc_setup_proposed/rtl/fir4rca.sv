@@ -1,34 +1,35 @@
-// ECE260A Lab 3
-// keep the same input and output and the same input and output registers
-// change the combinational addition part to something more optimal
-// refer to Fig. 11.42(a) in W&H 
+// ECE260A Fall 2019 Lab 3
+// sample 4-input carry save adder, based on W&H Fig. 11.42 (p. 459) 
+// always keep the same inputs and outputs and the same input and output registers
+// try various versions of the combinational part, which executes sum = ar + br + cr + dr
 module fir4rca #(parameter w=16)(
-  input                      clk, 
-                             reset,
-  input        signed [w-1:0] a,
-  output logic signed [w+1:0] s);
-// delay pipeline for input a
+  input                       clk, 
+                              reset,
+  input        [w-1:0] a, 		// serial input -- filter will sum 4 consecutive values
+  output logic [w+1:0] s);		// sum of 4 most recent values of a
+
   logic        signed [w-1:0] ar, br, cr, dr;
-
-// REFERENCE RIPPLE CARRY ADDER STARTS HERE LOGIC. YOUR PROPOSED LOGIC SHOULD
-// REPLACE THE CONTENT IN THIS SECTION
-  logic        signed [w+1:0] rca1_s, rca1_co, rca2_s, rca2_co;
-  logic        signed [w+1:0] sum;
-
+// combinational adder array -- this is what you should customize/optimize
+// CSA version
+  logic         [w-1:0] csa4_s;   // from w-bit top CSA
+  logic         [w  :0] csa4_c;
+  logic         [w  :0] csa5_s;   // from w+1-bit bottom CSA
+  logic         [w+1:0] csa5_c;
+  logic         [w+1:0] sum;	  // from final ripple adder
   always_comb begin
-    rca1_co[0] = 0;
-    rca2_co[0] = 0;
+    csa4_c[0] = 0;                // carry runs from [w:1], not [w-1:0]
+    csa5_c[0] = 0; 
     for(int i=0; i<w; i++)
-      {rca1_co[i+1],rca1_s[i]} = ar[i]+br[i]+rca1_co[i];
-
+      {csa4_c[i+1],csa4_s[i]} = ar[i]+br[i]+cr[i];
     for(int i=0; i<w; i++)
-      {rca2_co[i+1],rca2_s[i]} = cr[i]+dr[i]+rca2_co[i];
-
-    sum = rca1_s + rca2_s;    
+      {csa5_c[i+1],csa5_s[i]} = csa4_c[i]+csa4_s[i]+dr[i];
+    csa5_s[w] = csa4_c[w];	      // don't even top FA
+    csa5_c[w+1] = 0;
+    sum = csa5_c + csa5_s;        // final CPA or ripple adder (behavioral statement here)      
   end
- 
-// END OF RIPPLE CARRY ADDER LOGIC, YOUR PROPOSED LOGIC SHOULD END HERE
-
+//  wire         signed [16:0] sum1 = ar + br;
+//  wire         signed [16:0] sum2 = cr + dr;
+//  wire         signed [17:0] sum = sum1 + sum2; 
 // sequential logic -- standardized for everyone
   always_ff @(posedge clk)			// or just always -- always_ff tells tools you intend D flip flops
     if(reset) begin					// reset forces all registers to 0 for clean start of test
@@ -39,7 +40,7 @@ module fir4rca #(parameter w=16)(
 	  s  <= 'b0;
     end
     else begin					    // normal operation -- Dffs update on posedge clk
-	  ar <= a;			        // the chain will always hold the four most recent incoming data samples
+	  ar <= a;
 	  br <= ar;
 	  cr <= br;
 	  dr <= cr;
